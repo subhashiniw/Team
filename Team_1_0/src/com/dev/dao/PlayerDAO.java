@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import com.dev.model.Player;
 
-public class PlayerDAO extends JdbcDaoSupport{
+public class PlayerDAO extends JdbcDaoSupport implements PlayerDAOInt{
 
 	public void insert(Player player) throws Exception{
 		String sqlStmt = "INSERT INTO PLAYER (ID, NAME, DOB, AGE) VALUES(?,?,?,?)";

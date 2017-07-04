@@ -12,16 +12,16 @@ http://www.springframework.org/schema/context/spring-context.xsd
 http://www.springframework.org/schema/tx
 http://www.springframework.org/schema/tx/spring-tx.xsd">
  
- 	<bean id="teamService" class="com.dev.service.TeamService" scope="prototype">
-		<property name="teamDAO" ref="teamDAO" />
-		<property name="PlayerDAO" ref="playerDAO" />
+ 	<bean id="teamService" class="com.dev.service.impl.TeamServiceImpl" scope="prototype">
+<!-- 		<property name="teamDAO" ref="teamDAO" /> -->
+<!-- 		<property name="PlayerDAO" ref="playerDAO" /> -->
 	</bean>
  
 	<bean id="playerDAO" class="com.dev.dao.PlayerDAO">
 		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 	
-	<bean id="teamDAO" class="com.bank.tran.TeamDAO">
+	<bean id="teamDAO" class="com.dev.dao.TeamDAO">
 		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 	 
@@ -33,7 +33,7 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
 		<property name="dataSource" ref="pooledDataSource" />
 	</bean>
 	 
-	<bean id="dbUtil" class="com.bank.DbUtil" init-method="initialize">
+	<bean id="dbUtil" class="DbUtil" init-method="initialize">
 		<property name="dataSource" ref="pooledDataSource" />
 	</bean>
 
@@ -50,5 +50,56 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
 		<property name="username" value="sa" />
 		<property name="password" value="bsharp98" />
 	</bean>
+ 	
+ 	<bean id="txInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		
+		 <property name="transactionAttributes">
+            <props>
+                <prop key="*">PROPAGATION_REQUIRED,-Exception</prop>
+            </props>
+        </property>
+	</bean>
+ 	
+ 	<bean id="teamServiceProxy" class="org.springframework.aop.framework.ProxyFactoryBean" scope="prototype">
+        <property name="proxyInterfaces">
+            <value>com.dev.service.TeamService</value>
+        </property>
+        
+        <property name="interceptorNames">
+            <list>
+        		<value>txInterceptor</value>
+        		<value>teamService</value>
+			</list>
+        </property>
+    </bean>
+    
+    <bean id="teamDAOProxy" class="org.springframework.aop.framework.ProxyFactoryBean" scope="prototype">
+        <property name="proxyInterfaces">
+            <value>com.dev.dao.TeamDAOInt</value>
+        </property>
+        
+        <property name="interceptorNames">
+            <list>
+        		<value>txInterceptor</value>
+        		<value>teamDAO</value>
+			</list>
+        </property>
+    </bean>
+    
+    <bean id="playerDAOProxy" class="org.springframework.aop.framework.ProxyFactoryBean" scope="prototype">
+        <property name="proxyInterfaces">
+            <value>com.dev.dao.PlayerDAOInt</value>
+        </property>
+        
+        <property name="interceptorNames">
+            <list>
+        		<value>txInterceptor</value>
+        		<value>playerDAO</value>
+			</list>
+        </property>
+    </bean>
  	
 </beans>

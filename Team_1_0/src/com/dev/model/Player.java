@@ -12,6 +12,7 @@ public class Player {
 	private String id;
 	private String name;
 	private LocalDate dob;
+	private int age;
 	
 	public Player() {
 	}
@@ -45,5 +46,14 @@ public class Player {
 	public void setDob(LocalDate dob) {
 		this.dob = dob;
 	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+	
 	
 }

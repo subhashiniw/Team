@@ -1,5 +1,4 @@
 
- 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,7 +22,7 @@ public void initialize(){
 	try {
 		Connection connection = dataSource.getConnection();
 		Statement statement = connection.createStatement();
-		statement.executeUpdate("IF OBJECT_ID('PLAYER') IS NULL CREATE TABLE PLAYER (ID VARCHAR(20) PRIMARY KEY, NAME VARCHAR(150), DOB datetime, AGE INT)");
+		statement.executeUpdate("IF OBJECT_ID('PLAYER') IS NULL CREATE TABLE PLAYER (ID VARCHAR(20) PRIMARY KEY, TEAM_ID VARCHAR(20) ,NAME VARCHAR(150), DOB datetime, AGE INT)");
 		statement.executeUpdate("IF OBJECT_ID('TEAM') IS NULL CREATE TABLE TEAM (ID VARCHAR(20), NAME VARCHAR(150))");
 		statement.executeUpdate("DELETE FROM TEAM");
 		statement.executeUpdate("DELETE FROM TEAM");

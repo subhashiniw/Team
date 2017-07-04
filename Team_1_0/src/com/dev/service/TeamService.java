@@ -8,31 +8,15 @@ import com.dev.dao.TeamDAO;
 import com.dev.model.Player;
 import com.dev.model.Team;
 
-public class TeamService {
+public interface TeamService {
 
-	private TeamDAO teamDAO;
-	private PlayerDAO playerDAO;
-	private Team team;
 	
-	public TeamDAO getTeamDAO() {
-		return teamDAO;
-	}
+	public TeamDAO getTeamDAO() ;
 	
-	public PlayerDAO getPlayerDAO() {
-		return playerDAO;
-	}
+	public PlayerDAO getPlayerDAO() ;
 	
-	public void addPlayersToTeam(List<Player> playerList) {
-		//insert players
-		//create team
-		//add players to the team
-	}
+	public void addPlayersToTeam(List<Player> playerList) throws Exception;
+	public void setTeam(Team team) ;
 	
-	public void setTeam(Team team) {
-		this.team = team;
-	}
-	
-	public Team getTeam() {
-		return team;
-	}
+	public Team getTeam() ;
 }

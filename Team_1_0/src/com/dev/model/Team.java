@@ -1,9 +1,4 @@
 package com.dev.model;
-/**
- * 
- * @author subhashiniw
- *
- */
 public class Team {
 
 	private String id;

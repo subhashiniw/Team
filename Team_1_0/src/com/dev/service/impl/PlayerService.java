@@ -1,4 +1,4 @@
-package com.dev.service;
+package com.dev.service.impl;
 
 import com.dev.dao.PlayerDAO;
 
